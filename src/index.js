@@ -1,37 +1,18 @@
-import { createStore } from "redux";
+const $form = document.querySelector('form');
+const $input = document.querySelector('input');
+const $ul = document.querySelector('ul');
 
-const plus = document.getElementById('plus');
-const minus = document.querySelector('#minus');
-const number = document.querySelector('span');
-
-const PLUS = "PLUS";
-const MINUS = "MINUS";
-
-const reducer = (count = 0, action) => {
-  switch (action.type) {
-    case PLUS: 
-      return count + 1;
-    case MINUS: 
-      return count - 1;
-    default:
-      return count;
-  }
-};
-const store = createStore(reducer);
-
-const onChange = () => {
-  number.innerText = store.getState();
+const createToDo = (toDo) => {
+  const $li = document.createElement('li');
+  $li.innerText = toDo;
+  $ul.appendChild($li);
 };
 
-store.subscribe(onChange);
-
-const handlePlus = () => {
-  store.dispatch({type: PLUS});
+const onSubmit = (e) => {
+  e.preventDefault();
+  const toDo = $input.value;
+  $input.value = "";
+  createToDo(toDo);
 };
 
-const handleMinus = () => {
-  store.dispatch({type: MINUS});
-};
-
-plus.addEventListener('click', handlePlus);
-minus.addEventListener('click', handleMinus);
+$form.addEventListener('submit', onSubmit);
